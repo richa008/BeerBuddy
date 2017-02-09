@@ -23,3 +23,10 @@ BreweryDb - http://www.brewerydb.com/developers/docs
  
  5. Comments
     Since I am combining results of 2 different Api's, the results may not always be accurate when all filters are used together. To avoid this I would change the /beers API to also to partial searches. I am displaying only the first 50 results, I would also implement pagination so that more results can be displayed.  
+
+
+To Improve
+
+- Long, giant list of radio buttons which requires lots of scrolling. 
+- Making dual calls and trying to find intersection; the whole UI is in one giant directive, if you are going to use directives suggest slightly decomposing
+- No retries/error handling 
