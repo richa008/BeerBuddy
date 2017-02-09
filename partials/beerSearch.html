@@ -1,0 +1,76 @@
+<div>
+    <!-- Style filters -->
+    <section id="search-filters" class="col-sm-3 col-md-3 col-lg-3 border-left border-right">
+        <div class="border-bottom overflow-hide">
+            <h5 class="pull-left">Filter by Style</h5> </div>
+        <div class="clear mar-t-20">
+            <div class="form-group radio">
+                <label>
+                    <input type="radio" name="styles" ng-model="styleId" value=""> None </label>
+            </div>
+            <div class="form-group radio" ng-repeat="style in styles | orderBy: 'name'">
+                <label>
+                    <input type="radio" name="styles" ng-model="$parent.styleId" value="{{style.id}}"> {{style.name}} </label>
+            </div>
+        </div>
+    </section>
+    
+    <section id="search-results" class="section col-sm-9 col-md-9 col-lg-9 border-left large-height">
+        
+        <!-- Beer search field -->
+        <form ng-submit="searchBeer()">
+            <div class="border-bottom pad-b-20">
+                <div class="input-group">
+                    <input id="searchField" class="form-control" ng-model="searchString" type="text" ng-model="searchText" placeholder="Enter beer name to search... e.g: Admiral"> <span class="input-group-btn">
+                        <button style="background-color:#efefef" type="button" class="btn btn-default" ng-click="searchBeer()">Search</button>
+                    </span> </div>
+            </div>
+        </form>
+        
+        <!-- ABV and IBU fields -->
+        <div class="mar-t-10 overflow-hide border-bottom">
+            <div class="col-sm-6 col-md-6 col-lg-6 border-right">
+                <div class="form-group col-sm-6 col-md-6 col-lg-6">
+                    <label aria-labelledby="abv-min" for="abv-min">ABV Min</label>
+                    <input type="number" ng-model="abvMin" id="abv-min" class="form-control" /> </div>
+                <div class="form-group col-sm-6 col-md-6 col-lg-6">
+                    <label aria-labelledby="abv-max" for="abv-max">ABV Max</label>
+                    <input type="number" ng-model="abvMax" id="abv-max" class="form-control" /> </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group col-sm-6 col-md-6 col-lg-6">
+                    <label aria-labelledby="ibu-max" for="ibu-min">IBU Min</label>
+                    <input type="number" ng-model="ibuMin" id="ibu-min" class="form-control form-control-sm" /> </div>
+                <div class="form-group col-sm-6 col-md-6 col-lg-6">
+                    <label aria-labelledby="ibu-min" for="ibu-min" class=" col-form-label-sm">IBU Max</label>
+                    <input type="number" ng-model="ibuMax" id="ibu-min" class="form-control form-control-sm" /> </div>
+            </div>
+        </div>
+        
+          <!-- Search results table -->
+        <p role="content-info" ng-if="searchResults.length > 0" class="info-text">Displaying upto 50 results</p>
+        <table ng-if="searchResults.length > 0" class="table table-striped table-bordered table-hover" id="beer-table">
+            <thead>
+                <th class="col-md-7">
+                    <button style="color:white" class="btn btn-link btn-sort" ng-click="sortBy('name')">Name</button> <span class="sortorder" ng-show="propertyName === 'name'" ng-class="{reverse: reverse}"></span> </th>
+                <th class="col-md-1">
+                    <button style="color:white" class="btn btn-link btn-sort" ng-click="sortBy('abv')">ABV</button> <span class="sortorder" ng-show="propertyName === 'abv'" ng-class="{reverse: reverse}"></span> </th>
+                <th class="col-md-1">
+                    <button style="color:white" class="btn btn-link btn-sort" ng-click="sortBy('ibu')">IBU</button> <span class="sortorder" ng-show="propertyName === 'ibu'" ng-class="{reverse: reverse}"></span> </th>
+                <th class="col-md-3"> <span class="style-header">Style</span> </th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="s in searchResults | orderBy:propertyName:reverse">
+                    <td> <span class="name">{{ s.name }}</span>
+                        <div class="desc">{{ s. description }}</div>
+                    </td>
+                    <td>{{ s.abv }}</td>
+                    <td>{{ s.ibu }}</td>
+                    <td>{{ s.style.name }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div id="noSearchResults" ng-if="!searchResults || (searchResults.length == 0)"> No Search Results </div>
+    </section>
+    <div ng-if="loading" id="loading"> <span>Loading...</span> </div>
+</div>

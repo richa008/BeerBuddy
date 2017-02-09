@@ -1,0 +1,1 @@
+var beerBuddyApp = angular.module('beerBuddyApp', []);
